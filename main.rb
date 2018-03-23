@@ -5,9 +5,10 @@ def main
 	data_hash = Hash.new
 	answer = nil
 	reading_data = false
-	line = $stdin.readline.chomp
 
+	# Reading the input
 	loop do
+		line = $stdin.readline.chomp
 		splitted = line.split ' '
 
 		if splitted[0] != '%' and !splitted[0].nil?		# If it's not a comment
@@ -28,7 +29,6 @@ def main
 			end
 									
 		end
-		line = $stdin.readline.chomp
 		break if $stdin.eof?
 	end
 
@@ -37,6 +37,17 @@ def main
 	print answer
 	puts ""
 	print data_hash
+	puts ""
+
+	total_entropy = 0 
+	answer.first[1].each do |val|
+		count = data_hash.values.count val
+		p = count.to_f / data_hash.values.size.to_f
+		total_entropy += -p * Math::log(p, 2)
+	end
+
+	print total_entropy
+
 end
 
 main
